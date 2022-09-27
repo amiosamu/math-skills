@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -52,14 +53,44 @@ func main() {
 */
 
 func main() {
-	content, err := ioutil.ReadFile("data.txt")
+	args := os.Args[1:]
+	content, err := ioutil.ReadFile(args[0])
 	if err != nil {
 		log.Fatal(err)
 	}
 	lines := strings.Split(string(content), "\n")
-	ints := make([]int, len(lines))
-	for i, s := range lines {
-		ints[i], _ = strconv.Atoi(s)
+	ints := make([]int, 0)
+	for _, s := range lines {
+		temp, _ := strconv.Atoi(s)
+		ints = append(ints, temp)
 	}
-	fmt.Println(ints[0] + ints[1])
+	ints = ints[:len(ints)-1]
+	average := 0
+	// median := 0
+	variance := 0
+	// standardDeviation := 0
+	sum := 0
+	var mean int
+
+	for i := 0; i < len(ints); i++ {
+		sum += ints[i]
+	}
+	average = mean
+	mean = sum / len(ints)
+	mean = mean + 1
+	// 15 =avg, (1-15)^2 + 2-15^2 + 3-15^2 + 4-15^2 + 5-15^2, 196+169+144+121+100 =
+	fmt.Println(ints[0] - mean)
+	for i := 0; i < len(ints); i++ {
+		fmt.Println(quadrat(ints[i] - mean))
+	}
+	// variance = variance / len(ints)
+	// standardDeviation = int(math.Sqrt(float64(variance)))
+	fmt.Println(variance)
+	fmt.Println(sum)
+	fmt.Println(mean)
+	fmt.Println(ints)
+}
+
+func quadrat(n int) int {
+	return n * n
 }
