@@ -24,27 +24,11 @@ func main() {
 		key, _ := strconv.Atoi(val)
 		keys = append(keys, float64(key))
 	}
-	/*
-		out_avg := fmt.Sprintf("%s: %d", "Average", Average(ints))
-		io.WriteString(os.Stdout, out_avg)
-		fmt.Println()
 
-		out_median := fmt.Sprintf("%s: %d", "Median", Median(ints))
-		io.WriteString(os.Stdout, out_median)
-		fmt.Println()
-
-		out_variance := fmt.Sprintf("%s: %d", "Variance", Variance(ints))
-		io.WriteString(os.Stdout, out_variance)
-		fmt.Println()
-
-		out_sd := fmt.Sprintf("%s: %d", "Standard deviation", StandardDeviation(ints))
-		io.WriteString(os.Stdout, out_sd)
-		fmt.Println()
-	*/
-	average := Average(keys)
-	median := Median(keys)
-	fmt.Println("Average:", math.Round(average))
-	fmt.Println("Median:", math.Round(median))
+	fmt.Println("Average:", math.Round(Average(keys)))
+	fmt.Println("Median:", math.Round(Median(keys)))
+	fmt.Println("Variance:", int(math.Round((Variance(keys)))))
+	fmt.Println("Standard Deviation:", math.Round(StandardDeviation(keys)))
 }
 
 func Average(data []float64) float64 {
@@ -70,4 +54,28 @@ func Median(data []float64) (median float64) {
 	return median
 }
 
-func Variance(data []float64)
+func StandardDeviation(data []float64) (stddev float64) {
+	return StandardDeviationPopulation(data)
+}
+
+func StandardDeviationPopulation(data []float64) (stddev float64) {
+	vp := PopulationVariance(data)
+	return math.Sqrt(vp)
+}
+
+func PopulationVariance(data []float64) (pvar float64) {
+	v := _variance(data, 0)
+	return v
+}
+
+func _variance(data []float64, sample int) (variance float64) {
+	m := Average(data)
+	for _, n := range data {
+		variance += (n - m) * (n - m)
+	}
+	return variance / float64((len(data) - (1 * sample)))
+}
+
+func Variance(data []float64) (stddev float64) {
+	return PopulationVariance(data)
+}
