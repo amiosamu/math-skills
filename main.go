@@ -32,8 +32,7 @@ func main() {
 }
 
 func Average(data []float64) float64 {
-	sum := Sum(data)
-	return sum / float64(len(data))
+	return Sum(data) / float64(len(data))
 }
 
 func Sum(data []float64) (sum float64) {
