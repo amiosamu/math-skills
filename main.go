@@ -19,16 +19,16 @@ func main() {
 	file, _ := ioutil.ReadFile(args[0])
 	str := string(file)
 	res := strings.Fields(str)
-	keys := make([]float64, 0)
+	data := make([]float64, 0)
 	for _, val := range res {
 		key, _ := strconv.Atoi(val)
-		keys = append(keys, float64(key))
+		data = append(data, float64(key))
 	}
 
-	fmt.Println("Average:", math.Round(Average(keys)))
-	fmt.Println("Median:", math.Round(Median(keys)))
-	fmt.Println("Variance:", int(math.Round((Variance(keys)))))
-	fmt.Println("Standard Deviation:", math.Round(StandardDeviation(keys)))
+	fmt.Println("Average:", math.Round(Average(data)))
+	fmt.Println("Median:", math.Round(Median(data)))
+	fmt.Println("Variance:", int(math.Round((Variance(data)))))
+	fmt.Println("Standard Deviation:", math.Round(StandardDeviation(data)))
 }
 
 func Average(data []float64) float64 {
